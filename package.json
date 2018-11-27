@@ -12,7 +12,8 @@
   "private": true,
   "dependencies": {
     "@octokit/rest": "15.18.0",
-    "react": "^16.6.3",
+    "react": "^16.7.0-alpha.2",
+    "react-cache": "^2.0.0-alpha.1",
     "react-dom": "^16.6.3",
     "react-scripts": "2.1.1"
   },

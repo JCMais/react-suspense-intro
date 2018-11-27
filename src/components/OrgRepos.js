@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { reposFetcher } from '../api/fetchers';
 
@@ -76,10 +76,12 @@ export class OrgRepos extends React.Component {
 
   render() {
     return (
-      <RepoListSuspense
-        orgName={this.props.orgName}
-        onRepoClick={repo => console.log('Clicked', repo.full_name)}
-      />
+      <Suspense fallback={<LoadingSpinner />}>
+        <RepoListSuspense
+          orgName={this.props.orgName}
+          onRepoClick={repo => console.log('Clicked', repo)}
+        />
+      </Suspense>
     );
   }
 }

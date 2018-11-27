@@ -11,7 +11,7 @@ const imageFetcher = createResourceFetcher(src => {
 });
 
 function ContributorAvatar(props) {
-  return <img {...props} src={imageFetcher.read(props.src)} />;
+  return <img alt="" {...props} src={imageFetcher.read(props.src)} />;
 }
 
 export function ContributorItem(props) {

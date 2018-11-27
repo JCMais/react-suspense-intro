@@ -1,28 +1,21 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
-import * as githubApi from '../api/api';
+import { contributorsFetcher } from '../api/fetchers';
 
 import { LoadingSpinner } from './LoadingSpinner';
 
 import { ContributorList } from './contributor/ContributorList';
 
-export class RepoContributors extends React.Component {
-  state = {
-    isLoading: true,
-    data: []
-  };
+function ContributorListSuspense(props) {
+  const data = contributorsFetcher.read(props.fullRepoName);
 
-  async componentDidMount() {
-    const data = await githubApi.getRepoContributors(this.props.fullRepoName);
+  return <ContributorList data={data} />;
+}
 
-    this.setState({
-      isLoading: false,
-      data
-    });
-  }
-
-  render() {
-    const { data, isLoading } = this.state;
-    return isLoading ? <LoadingSpinner /> : <ContributorList data={data} />;
-  }
+export function RepoContributors(props) {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <ContributorListSuspense fullRepoName={props.fullRepoName} />
+    </Suspense>
+  );
 }

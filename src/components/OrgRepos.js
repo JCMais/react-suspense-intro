@@ -12,76 +12,42 @@ function RepoListSuspense(props) {
 }
 
 export class OrgRepos extends React.Component {
-  // state = {
-  //   isLoading: true,
-  //   isShowingRepoContributors: null,
-  //   data: []
-  // };
+  state = {
+    isShowingRepoContributors: null
+  };
 
-  // componentDidMount() {
-  //   this.fetchDataAndUpdate(this.props.orgName);
-  // }
+  onRepoClick = fullRepoName => {
+    this.setState({
+      isShowingRepoContributors: fullRepoName
+    });
+  };
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (this.props.orgName !== nextProps.orgName) {
-  //     this.setState({
-  //       isLoading: true,
-  //       isShowingRepoContributors: null,
-  //       data: []
-  //     });
-  //     this.fetchDataAndUpdate(nextProps.orgName);
-  //   }
-  // }
+  onBack = () => {
+    this.setState({
+      isShowingRepoContributors: null
+    });
+  };
 
-  // async fetchDataAndUpdate(orgName) {
-  //   const data = await githubApi.getOrgRepos(orgName);
+  renderContent() {
+    const { isShowingRepoContributors } = this.state;
 
-  //   this.setState({
-  //     isLoading: false,
-  //     data
-  //   });
-  // }
-
-  // onRepoClick = fullRepoName => {
-  //   this.setState({
-  //     isShowingRepoContributors: fullRepoName
-  //   });
-  // };
-
-  // onBack = () => {
-  //   this.setState({
-  //     isShowingRepoContributors: null
-  //   });
-  // };
-
-  // renderContent() {
-  //   const { data, isShowingRepoContributors } = this.state;
-
-  //   return isShowingRepoContributors ? (
-  //     <div>
-  //       <button onClick={this.onBack}>Back</button>
-  //       <br />
-  //       <RepoContributors fullRepoName={isShowingRepoContributors} />
-  //     </div>
-  //   ) : (
-  //     <RepoList onRepoClick={this.onRepoClick} repos={data} />
-  //   );
-  // }
-
-  // render() {
-  //   const { isLoading } = this.state;
-
-  //   return isLoading ? <LoadingSpinner /> : this.renderContent();
-  // }
+    return isShowingRepoContributors ? (
+      <div>
+        <button onClick={this.onBack}>Back</button>
+        <br />
+        <RepoContributors fullRepoName={isShowingRepoContributors} />
+      </div>
+    ) : (
+      <RepoListSuspense
+        orgName={this.props.orgName}
+        onRepoClick={this.onRepoClick}
+      />
+    );
+  }
 
   render() {
     return (
-      <Suspense fallback={<LoadingSpinner />}>
-        <RepoListSuspense
-          orgName={this.props.orgName}
-          onRepoClick={repo => console.log('Clicked', repo)}
-        />
-      </Suspense>
+      <Suspense fallback={<LoadingSpinner />}>{this.renderContent()}</Suspense>
     );
   }
 }

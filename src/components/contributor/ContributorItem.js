@@ -1,7 +1,6 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 
 import { createResourceFetcher } from '../../cache';
-import { LoadingSpinnerImage } from '../LoadingSpinner';
 
 const imageFetcher = createResourceFetcher(src => {
   return new Promise(resolve => {
@@ -19,13 +18,11 @@ export function ContributorItem(props) {
   const { contributor } = props;
   return (
     <li key={contributor.node_id}>
-      <Suspense fallback={<LoadingSpinnerImage className="small" />}>
-        <ContributorAvatar
-          className="contributor-image"
-          alt=""
-          src={contributor.avatar_url}
-        />
-      </Suspense>
+      <ContributorAvatar
+        className="contributor-image"
+        alt=""
+        src={contributor.avatar_url}
+      />
       <span className="contributor-login">{contributor.login}</span>
     </li>
   );

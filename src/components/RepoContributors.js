@@ -1,8 +1,6 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 
 import { contributorsFetcher } from '../api/fetchers';
-
-import { LoadingSpinner } from './LoadingSpinner';
 
 import { ContributorList } from './contributor/ContributorList';
 
@@ -13,9 +11,5 @@ function ContributorListSuspense(props) {
 }
 
 export function RepoContributors(props) {
-  return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <ContributorListSuspense fullRepoName={props.fullRepoName} />
-    </Suspense>
-  );
+  return <ContributorListSuspense fullRepoName={props.fullRepoName} />;
 }

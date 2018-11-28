@@ -47,7 +47,9 @@ export class OrgRepos extends React.Component {
 
   render() {
     return (
-      <Suspense fallback={<LoadingSpinner />}>{this.renderContent()}</Suspense>
+      <Suspense maxDuration={600} fallback={<LoadingSpinner />}>
+        {this.renderContent()}
+      </Suspense>
     );
   }
 }

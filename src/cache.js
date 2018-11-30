@@ -1,7 +1,7 @@
-import { unstable_createResource as createResource } from 'react-cache';
+import { unstable_createResource } from 'react-cache';
 
 export function createResourceFetcher(callback) {
-  const resource = createResource(callback);
+  const resource = unstable_createResource(callback);
   return {
     read(...args) {
       return resource.read(...args);
